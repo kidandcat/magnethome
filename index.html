@@ -4,15 +4,16 @@ document.addEventListener('DOMContentLoaded',t_setvisRecs);}})();</script><style
 /* Mobile responsive fixes */
 @media screen and (max-width:640px) {
   /* Why us section */
-  #rec-why-us .t-container { padding: 0 24px !important; }
-  #rec-why-us h2 { font-size: 28px !important; }
-  #rec-why-us p { font-size: 14px !important; }
-  #rec-why-us div[style*="display:flex"][style*="gap:20px"] { flex-direction: row !important; }
-  #rec-why-us div[style*="font-size:18px"] { font-size: 16px !important; }
-  #rec-why-us div[style*="font-size:15px"] { font-size: 13px !important; }
+  #rec-why-us { padding: 60px 0 !important; }
+  #rec-why-us .t-container { padding: 0 20px !important; box-sizing: border-box !important; max-width: 100% !important; overflow: hidden !important; }
+  #rec-why-us h2 { font-size: 26px !important; }
+  #rec-why-us p { font-size: 14px !important; word-wrap: break-word !important; }
+  #rec-why-us div[style*="font-size:18px"] { font-size: 15px !important; }
+  #rec-why-us div[style*="font-size:15px"] { font-size: 13px !important; word-wrap: break-word !important; }
 
-  /* Testimonials */
-  #rec2115279753 .testimonial-card { min-width: unset !important; max-width: unset !important; width: 100% !important; padding: 24px !important; }
+  /* Testimonials - stack vertically on mobile */
+  #rec2115279753 .t558__container { flex-direction: column !important; }
+  #rec2115279753 .testimonial-card { min-width: unset !important; max-width: unset !important; width: auto !important; padding: 24px !important; margin: 0 20px !important; }
 
   /* Footer */
   #rec2115279813 .t-container > div:first-child { flex-direction: column !important; gap: 32px !important; }
