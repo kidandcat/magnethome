@@ -22,11 +22,38 @@ document.addEventListener('DOMContentLoaded',t_setvisRecs);}})();</script><style
   #rec2115279723 .t-btnflex { display: block !important; width: 100% !important; text-align: center !important; margin-bottom: 12px !important; box-sizing: border-box !important; }
   #rec2115279723 span[style*="display:inline-block;width:20px"] { display: none !important; }
 
-  /* Nav - hide on mobile, Tilda handles this */
-  .t228__rightside .t228__right_descr { font-size: 14px !important; }
+  /* Mobile Nav - hamburger menu */
+  #rec2115279733 .t228__maincontainer { height: 60px !important; padding: 0 16px !important; }
+  #rec2115279733 .t228 { height: 60px !important; }
+  #rec2115279733 .t228__padding40px { display: none !important; }
+  #rec2115279733 .t228__centerside { display: none !important; }
+  #rec2115279733 .t228__rightside .t228__right_descr { display: none !important; }
+  #rec2115279733 .t228__rightside .t228__right_buttons { display: none !important; }
+  #rec2115279733 .t228__leftcontainer .t228__logo { font-size: 20px !important; }
+  .mobile-hamburger { display: block !important; }
+  .mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); z-index: 99999; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+  .mobile-menu-overlay.active { display: flex !important; }
+  .mobile-menu-overlay a { color: #fff; text-decoration: none; font-size: 22px; font-family: 'TildaSans',Arial,sans-serif; }
+  .mobile-menu-overlay .mobile-close { position: absolute; top: 16px; right: 20px; font-size: 32px; color: #fff; background: none; border: none; cursor: pointer; }
+  .mobile-menu-overlay .mobile-cta { background: #ff822e; color: #fff; padding: 14px 32px; border-radius: 6px; font-size: 18px; font-weight: 600; }
 }
+/* Hamburger button - hidden on desktop */
+.mobile-hamburger { display: none; position: fixed; top: 16px; right: 16px; z-index: 9999; background: none; border: none; cursor: pointer; padding: 8px; }
+.mobile-hamburger span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; }
 </style>
-</head> <body class="t-body" style="margin:0;"> <!--allrecords--> <div id="allrecords" class="t-records" data-hook="blocks-collection-content-node" data-tilda-project-id="23975113" data-tilda-page-id="131797253" data-tilda-formskey="8d02af71e97a7321a2f77d7423975113" data-tilda-cookie="no" data-tilda-lazy="yes" data-tilda-root-zone="one" data-tilda-project-country="ES"> <div id="rec2115279733" class="r t-rec" style=" " data-animationappear="off" data-record-type="257"> <!-- T228 --> <div id="nav2115279733marker"></div> <div id="nav2115279733" class="t228 t228__positionabsolute " style="background-color: rgba(0,0,0,0.75); height:110px; " data-bgcolor-hex="#000000" data-bgcolor-rgba="rgba(0,0,0,0.75)" data-navmarker="nav2115279733marker" data-appearoffset="" data-bgopacity-two="" data-menushadow="" data-menushadow-css="" data-bgopacity="0.75" data-menu-items-align="center" data-menu="yes"> <div class="t228__maincontainer t228__c12collumns" style="height:110px;"> <div class="t228__padding40px"></div> <div class="t228__leftside"> <div class="t228__leftcontainer"> <a href="/" class="t228__imgwrapper"> <div class="t228__logo t-title" field="title">MagnetHome</div> </a> </div> </div> <div class="t228__centerside "> <nav class="t228__centercontainer"> <ul role="list" class="t228__list t-menu__list t228__list_hidden"> <li class="t228__list_item"
+</head> <body class="t-body" style="margin:0;">
+<button class="mobile-hamburger" onclick="document.querySelector('.mobile-menu-overlay').classList.add('active')">
+<span></span><span></span><span></span>
+</button>
+<div class="mobile-menu-overlay">
+<button class="mobile-close" onclick="document.querySelector('.mobile-menu-overlay').classList.remove('active')">&times;</button>
+<a href="index.html#service" onclick="document.querySelector('.mobile-menu-overlay').classList.remove('active')">Servicios</a>
+<a href="index.html#portfolio" onclick="document.querySelector('.mobile-menu-overlay').classList.remove('active')">Trabajos</a>
+<a href="index.html#contacts" onclick="document.querySelector('.mobile-menu-overlay').classList.remove('active')">Contactos</a>
+<a href="tel:+34643692727">+34 643 692 727</a>
+<a href="https://wa.me/34643692727" class="mobile-cta" target="_blank">WhatsApp</a>
+</div>
+<!--allrecords--> <div id="allrecords" class="t-records" data-hook="blocks-collection-content-node" data-tilda-project-id="23975113" data-tilda-page-id="131797253" data-tilda-formskey="8d02af71e97a7321a2f77d7423975113" data-tilda-cookie="no" data-tilda-lazy="yes" data-tilda-root-zone="one" data-tilda-project-country="ES"> <div id="rec2115279733" class="r t-rec" style=" " data-animationappear="off" data-record-type="257"> <!-- T228 --> <div id="nav2115279733marker"></div> <div id="nav2115279733" class="t228 t228__positionabsolute " style="background-color: rgba(0,0,0,0.75); height:110px; " data-bgcolor-hex="#000000" data-bgcolor-rgba="rgba(0,0,0,0.75)" data-navmarker="nav2115279733marker" data-appearoffset="" data-bgopacity-two="" data-menushadow="" data-menushadow-css="" data-bgopacity="0.75" data-menu-items-align="center" data-menu="yes"> <div class="t228__maincontainer t228__c12collumns" style="height:110px;"> <div class="t228__padding40px"></div> <div class="t228__leftside"> <div class="t228__leftcontainer"> <a href="/" class="t228__imgwrapper"> <div class="t228__logo t-title" field="title">MagnetHome</div> </a> </div> </div> <div class="t228__centerside "> <nav class="t228__centercontainer"> <ul role="list" class="t228__list t-menu__list t228__list_hidden"> <li class="t228__list_item"
 style="padding:0 15px 0 0;"> <a class="t-menu__link-item"
 href="index.html#service" data-menu-submenu-hook="" data-menu-item-number="1">
 Servicios
