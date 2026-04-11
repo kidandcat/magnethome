@@ -5,16 +5,14 @@ document.addEventListener('DOMContentLoaded',t_setvisRecs);}})();</script><style
 @media screen and (max-width:640px) {
   /* Why us section */
   #rec-why-us { padding: 60px 0 !important; overflow: hidden !important; }
-  #rec-why-us .why-us-container { padding: 0 20px !important; box-sizing: border-box !important; width: 100% !important; max-width: 100% !important; }
-  #rec-why-us .why-us-container * { box-sizing: border-box !important; overflow-wrap: break-word !important; word-wrap: break-word !important; }
-  #rec-why-us .why-us-container > div[style*="display:flex"] > div { min-width: 0 !important; overflow: hidden !important; }
-  #rec-why-us .why-us-container > div[style*="display:flex"] > div > div:last-child { min-width: 0 !important; overflow: hidden !important; }
+  #rec-why-us .why-us-container { padding: 0 16px !important; box-sizing: border-box !important; width: 100% !important; max-width: 100% !important; overflow: hidden !important; }
+  #rec-why-us .why-us-container div { box-sizing: border-box !important; min-width: 0 !important; }
   #rec-why-us h2 { font-size: 26px !important; }
   #rec-why-us p { font-size: 14px !important; }
 
   /* Testimonials - stack vertically on mobile */
-  #rec2115279753 .t558__container { flex-direction: column !important; }
-  #rec2115279753 .testimonial-card { min-width: unset !important; max-width: unset !important; width: auto !important; padding: 24px !important; margin: 0 20px !important; }
+  #rec2115279753 .t558__container.t-container { display: flex !important; flex-direction: column !important; gap: 16px !important; padding: 0 16px !important; margin: 0 auto !important; max-width: 100% !important; width: 100% !important; box-sizing: border-box !important; }
+  #rec2115279753 .t558__container .testimonial-card { flex: none !important; width: auto !important; min-width: 0 !important; max-width: none !important; padding: 24px !important; margin: 0 !important; box-sizing: border-box !important; }
 
   /* Footer */
   #rec2115279813 .t-container > div:first-child { flex-direction: column !important; gap: 32px !important; }
