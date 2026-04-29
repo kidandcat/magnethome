@@ -118,14 +118,14 @@ var emailTmpl = template.Must(template.New("email").Parse(`<!DOCTYPE html PUBLIC
                   <!-- Lockup -->
                   <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
                     <tr>
-                      <td valign="middle" width="38" style="padding-right:12px;">
-                        <img src="https://magnethome.es/img/email-mark.png" width="30" height="30" alt="" style="display:block;width:30px;height:30px;"/>
+                      <td valign="middle" width="76" style="padding-right:18px;">
+                        <img src="https://magnethome.es/img/email-mark.png" width="64" height="64" alt="" style="display:block;width:64px;height:64px;"/>
                       </td>
                       <td valign="middle">
-                        <div style="font-family:Georgia,'Times New Roman',serif;font-size:18px;color:#CCAA63;letter-spacing:3px;text-transform:uppercase;font-weight:400;line-height:1.1;">
-                          M<span style="font-size:15px;letter-spacing:2.2px;">AGNET</span>H<span style="font-size:15px;letter-spacing:2.2px;">OME</span>
+                        <div style="font-family:Georgia,'Times New Roman',serif;font-size:24px;color:#CCAA63;letter-spacing:3px;text-transform:uppercase;font-weight:400;line-height:1.1;">
+                          M<span style="font-size:20px;letter-spacing:2.2px;">AGNET</span>H<span style="font-size:20px;letter-spacing:2.2px;">OME</span>
                         </div>
-                        <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:11px;color:#9A9F9F;margin-top:4px;letter-spacing:0.5px;">
+                        <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:12px;color:#9A9F9F;margin-top:6px;letter-spacing:0.5px;">
                           Reformas integrales · Costa del Sol
                         </div>
                       </td>
@@ -156,7 +156,9 @@ var emailTmpl = template.Must(template.New("email").Parse(`<!DOCTYPE html PUBLIC
                         <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#CCAA63;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:12px;">
                           Síguenos
                         </div>
-                        <a href="https://www.instagram.com/magnethome_/" style="display:inline-block;width:34px;height:34px;border:1px solid #CCAA63;border-radius:50%;text-align:center;line-height:32px;color:#CCAA63;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0;">Ig</a>
+                        <a href="https://www.instagram.com/magnethome_/" style="display:inline-block;text-decoration:none;line-height:0;">
+                          <img src="https://magnethome.es/img/email-instagram.png" width="40" height="40" alt="Instagram" style="display:block;width:40px;height:40px;border:0;"/>
+                        </a>
                       </td>
                     </tr>
                   </table>
