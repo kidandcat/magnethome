@@ -11,6 +11,27 @@ import (
 	"github.com/kidandcat/magnethome/server/models"
 )
 
+// anyAddressMatchesDomain reports whether any recipient address has the given domain suffix.
+func anyAddressMatchesDomain(addrs []string, domain string) bool {
+	if domain == "" {
+		return true
+	}
+	suffix := "@" + strings.ToLower(domain)
+	for _, a := range addrs {
+		// Resend may pass "Name <user@domain>" or just "user@domain".
+		a = strings.ToLower(a)
+		if i := strings.LastIndex(a, "<"); i >= 0 {
+			if j := strings.Index(a[i:], ">"); j > 0 {
+				a = a[i+1 : i+j]
+			}
+		}
+		if strings.HasSuffix(strings.TrimSpace(a), suffix) {
+			return true
+		}
+	}
+	return false
+}
+
 // Resend forwards inbound emails through a webhook (Svix-style) with type "email.received".
 type resendWebhook struct {
 	Type string `json:"type"`
@@ -53,6 +74,11 @@ func (s *Server) ResendWebhook(w http.ResponseWriter, r *http.Request) {
 
 	switch p.Type {
 	case "email.received", "inbound.email":
+		// Resend webhooks are account-wide — ignore events for other domains in the account.
+		if !anyAddressMatchesDomain(p.Data.To, s.cfg.AcceptedDomain) {
+			log.Printf("resend webhook: ignoring %s for non-magnethome recipients %v", p.Type, p.Data.To)
+			break
+		}
 		rec := &models.Email{
 			Direction: "incoming",
 			From:      p.Data.From,

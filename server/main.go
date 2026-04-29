@@ -34,12 +34,13 @@ func main() {
 	resend := email.New(cfg.ResendKey)
 
 	srv, err := handlers.NewServer(handlers.Config{
-		Auth:          a,
-		Repo:          repo,
-		Resend:        resend,
-		WebhookSecret: cfg.ResendWebhookSecret,
-		FromOptions:   cfg.FromOptions,
-		DefaultFrom:   cfg.DefaultFrom,
+		Auth:           a,
+		Repo:           repo,
+		Resend:         resend,
+		WebhookSecret:  cfg.ResendWebhookSecret,
+		FromOptions:    cfg.FromOptions,
+		DefaultFrom:    cfg.DefaultFrom,
+		AcceptedDomain: cfg.AcceptedDomain,
 	})
 	if err != nil {
 		log.Fatalf("handlers init: %v", err)
@@ -82,6 +83,7 @@ type config struct {
 	ResendWebhookSecret string
 	FromOptions         []string
 	DefaultFrom         string
+	AcceptedDomain      string
 }
 
 func loadConfig() config {
@@ -96,6 +98,7 @@ func loadConfig() config {
 		ResendKey:           os.Getenv("RESEND_API_KEY"),
 		ResendWebhookSecret: os.Getenv("RESEND_WEBHOOK_SECRET"),
 		DefaultFrom:         envOr("DEFAULT_FROM", "hola@magnethome.es"),
+		AcceptedDomain:      envOr("ACCEPTED_DOMAIN", "magnethome.es"),
 	}
 	froms := envOr("FROM_OPTIONS", "hola@magnethome.es,info@magnethome.es")
 	for _, f := range strings.Split(froms, ",") {

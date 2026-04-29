@@ -17,12 +17,13 @@ import (
 var staticFS embed.FS
 
 type Config struct {
-	Auth          *auth.Auth
-	Repo          *models.EmailRepo
-	Resend        *email.Client
-	WebhookSecret string
-	FromOptions   []string // e.g. ["hola@magnethome.es", "info@magnethome.es"]
-	DefaultFrom   string
+	Auth           *auth.Auth
+	Repo           *models.EmailRepo
+	Resend         *email.Client
+	WebhookSecret  string
+	FromOptions    []string // e.g. ["hola@magnethome.es", "info@magnethome.es"]
+	DefaultFrom    string
+	AcceptedDomain string // recipients outside this domain are ignored by the webhook
 }
 
 type Server struct {
