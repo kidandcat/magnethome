@@ -157,7 +157,7 @@ func (s *Server) send(from string, to []string, subject, body, inReplyTo string)
 		To:      to,
 		Subject: subject,
 		Text:    body,
-		HTML:    plainToHTML(body),
+		HTML:    email.RenderHTML(body),
 	}
 	resp, err := s.cfg.Resend.Send(req)
 	if err != nil {
@@ -178,19 +178,3 @@ func (s *Server) send(from string, to []string, subject, body, inReplyTo string)
 	return err
 }
 
-func plainToHTML(s string) string {
-	// Minimal: escape via the template package would be cleaner, but we keep <br>-based formatting.
-	var b strings.Builder
-	for i, line := range strings.Split(s, "\n") {
-		if i > 0 {
-			b.WriteString("<br>")
-		}
-		b.WriteString(htmlEscape(line))
-	}
-	return b.String()
-}
-
-func htmlEscape(s string) string {
-	r := strings.NewReplacer("&", "&amp;", "<", "&lt;", ">", "&gt;", "\"", "&quot;", "'", "&#39;")
-	return r.Replace(s)
-}
