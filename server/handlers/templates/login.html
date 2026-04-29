@@ -1,0 +1,19 @@
+{{define "login"}}<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Acceso · Magnethome admin</title>
+<link rel="stylesheet" href="/admin/static/admin.css">
+</head>
+<body class="login-body">
+<form class="login-card" method="post" action="/admin/login">
+  <h1>Magnethome admin</h1>
+  {{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+  <label>Usuario<input type="text" name="username" autocomplete="username" required autofocus></label>
+  <label>Contraseña<input type="password" name="password" autocomplete="current-password" required></label>
+  <button type="submit">Entrar</button>
+</form>
+</body>
+</html>{{end}}

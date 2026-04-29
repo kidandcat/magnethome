@@ -1,0 +1,20 @@
+{{define "sent"}}{{template "layout" .}}{{end}}
+{{define "content"}}
+<div class="page-head"><h1>Enviados</h1></div>
+{{if not .Emails}}
+  <p class="empty">No has enviado emails todavía.</p>
+{{else}}
+<table class="emails">
+  <thead><tr><th>Para</th><th>Asunto</th><th>Enviado</th></tr></thead>
+  <tbody>
+  {{range .Emails}}
+    <tr>
+      <td>{{.To}}</td>
+      <td><a href="/admin/email/{{.ID}}">{{if .Subject}}{{.Subject}}{{else}}(sin asunto){{end}}</a></td>
+      <td>{{fmtTime .CreatedAt}}</td>
+    </tr>
+  {{end}}
+  </tbody>
+</table>
+{{end}}
+{{end}}

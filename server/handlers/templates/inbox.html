@@ -1,0 +1,34 @@
+{{define "inbox"}}{{template "layout" .}}{{end}}
+{{define "content"}}
+<div class="page-head">
+  <h1>{{if .ShowArchived}}Archivados{{else}}Bandeja de entrada{{end}}</h1>
+  <div class="toolbar">
+    {{if .ShowArchived}}
+      <a href="/admin">Ver activos</a>
+    {{else}}
+      <a href="/admin?archived=1">Ver archivados</a>
+    {{end}}
+  </div>
+</div>
+{{if not .Emails}}
+  <p class="empty">No hay emails {{if .ShowArchived}}archivados{{else}}por leer{{end}}.</p>
+{{else}}
+<table class="emails">
+  <thead><tr><th>De</th><th>Asunto</th><th>Recibido</th><th></th></tr></thead>
+  <tbody>
+  {{range .Emails}}
+    <tr class="{{if not .IsRead}}unread{{end}}">
+      <td>{{.From}}</td>
+      <td><a href="/admin/email/{{.ID}}">{{if .Subject}}{{.Subject}}{{else}}(sin asunto){{end}}</a></td>
+      <td>{{fmtTime .CreatedAt}}</td>
+      <td class="actions">
+        <form method="post" action="/admin/email/{{.ID}}/archive">
+          <button type="submit" title="{{if .IsArchived}}Desarchivar{{else}}Archivar{{end}}">{{if .IsArchived}}↩{{else}}✕{{end}}</button>
+        </form>
+      </td>
+    </tr>
+  {{end}}
+  </tbody>
+</table>
+{{end}}
+{{end}}

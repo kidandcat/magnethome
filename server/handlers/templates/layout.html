@@ -1,0 +1,26 @@
+{{define "layout"}}<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>{{.Title}} · Magnethome admin</title>
+<link rel="stylesheet" href="/admin/static/admin.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/admin">Magnethome <span>admin</span></a>
+  <nav>
+    <a href="/admin" {{if eq .Section "inbox"}}class="active"{{end}}>Bandeja {{if .UnreadCount}}<span class="badge">{{.UnreadCount}}</span>{{end}}</a>
+    <a href="/admin/sent" {{if eq .Section "sent"}}class="active"{{end}}>Enviados</a>
+    <a href="/admin/compose" {{if eq .Section "compose"}}class="active"{{end}}>Nuevo</a>
+    <form method="post" action="/admin/logout" class="logout">
+      <button type="submit">Salir</button>
+    </form>
+  </nav>
+</header>
+<main>
+{{template "content" .}}
+</main>
+</body>
+</html>{{end}}

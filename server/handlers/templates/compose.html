@@ -1,0 +1,16 @@
+{{define "compose"}}{{template "layout" .}}{{end}}
+{{define "content"}}
+<div class="page-head"><h1>Nuevo email</h1></div>
+{{if .Error}}<p class="error">{{.Error}}</p>{{end}}
+<form method="post" action="/admin/compose" class="compose">
+  <label>De
+    <select name="from">
+      {{range .FromOptions}}<option value="{{.}}" {{if eq . $.From}}selected{{end}}>{{.}}</option>{{end}}
+    </select>
+  </label>
+  <label>Para<input type="text" name="to" value="{{.To}}" required></label>
+  <label>Asunto<input type="text" name="subject" value="{{.Subject}}"></label>
+  <label>Mensaje<textarea name="body" rows="14" required>{{.Body}}</textarea></label>
+  <button type="submit">Enviar</button>
+</form>
+{{end}}

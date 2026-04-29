@@ -1,0 +1,11 @@
+.git
+.github
+.gitignore
+.dockerignore
+README.md
+*.md
+fly.toml
+Dockerfile
+server/data
+server/tmp
+**/.DS_Store

@@ -1,0 +1,68 @@
+:root {
+  --bg: #0f1115;
+  --panel: #171a21;
+  --border: #262b35;
+  --text: #e7eaf0;
+  --muted: #8a93a6;
+  --accent: #4f8bff;
+  --accent-strong: #2c6cf0;
+  --error: #ff6b6b;
+  --unread-bg: #1d2330;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px; background: var(--panel); border-bottom: 1px solid var(--border); }
+.brand { font-size: 16px; font-weight: 600; color: var(--text); }
+.brand span { color: var(--muted); font-weight: 400; }
+.topbar nav { display: flex; gap: 18px; align-items: center; }
+.topbar nav a { color: var(--muted); padding: 6px 0; }
+.topbar nav a.active { color: var(--text); border-bottom: 2px solid var(--accent); }
+.topbar nav .badge { display: inline-block; min-width: 18px; padding: 1px 6px; margin-left: 4px; background: var(--accent-strong); color: #fff; border-radius: 9px; font-size: 11px; text-align: center; }
+.topbar form.logout { margin: 0; }
+.topbar form.logout button { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 4px 10px; border-radius: 4px; cursor: pointer; }
+.topbar form.logout button:hover { color: var(--text); }
+
+main { padding: 24px; max-width: 1100px; margin: 0 auto; }
+.page-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.page-head h1 { margin: 0; font-size: 22px; }
+.page-head .toolbar { display: flex; gap: 12px; align-items: center; }
+.page-head .toolbar form { margin: 0; }
+
+table.emails { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+table.emails th, table.emails td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+table.emails th { background: #1c212c; color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+table.emails tr:last-child td { border-bottom: none; }
+table.emails tr.unread td { background: var(--unread-bg); font-weight: 600; }
+table.emails td.actions { text-align: right; width: 60px; }
+table.emails td.actions button { background: transparent; border: 1px solid var(--border); color: var(--muted); width: 28px; height: 28px; border-radius: 4px; cursor: pointer; }
+table.emails td.actions button:hover { color: var(--text); border-color: var(--accent); }
+
+.empty { color: var(--muted); padding: 40px; text-align: center; }
+.error { background: rgba(255,107,107,0.1); border: 1px solid var(--error); color: var(--error); padding: 10px 14px; border-radius: 4px; }
+
+dl.meta { display: grid; grid-template-columns: 80px 1fr; gap: 4px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; margin: 0 0 16px; }
+dl.meta dt { color: var(--muted); }
+dl.meta dd { margin: 0; }
+
+.body { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin-bottom: 24px; }
+.body iframe { width: 100%; min-height: 400px; border: 0; background: #fff; border-radius: 4px; }
+.body pre { white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: ui-monospace, SF Mono, Menlo, monospace; font-size: 13px; }
+
+section.reply, form.compose { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 18px; }
+section.reply h2 { margin: 0 0 12px; font-size: 16px; }
+form label { display: block; margin-bottom: 12px; color: var(--muted); font-size: 13px; }
+form input[type=text], form input[type=password], form select, form textarea {
+  display: block; width: 100%; margin-top: 4px; padding: 8px 10px;
+  background: #0f1218; color: var(--text); border: 1px solid var(--border); border-radius: 4px; font: inherit;
+}
+form textarea { resize: vertical; font-family: inherit; }
+form button[type=submit] { background: var(--accent-strong); color: #fff; border: 0; padding: 10px 18px; border-radius: 4px; cursor: pointer; font-weight: 500; }
+form button[type=submit]:hover { background: var(--accent); }
+
+body.login-body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.login-card { width: 320px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 28px; }
+.login-card h1 { margin: 0 0 18px; font-size: 18px; text-align: center; }
+.login-card button { width: 100%; }

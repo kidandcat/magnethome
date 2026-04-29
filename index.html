@@ -37,9 +37,10 @@ document.addEventListener('DOMContentLoaded',t_setvisRecs);}})();</script><style
   .mobile-menu-overlay .mobile-close { position: absolute; top: 16px; right: 20px; font-size: 32px; color: #fff; background: none; border: none; cursor: pointer; }
   .mobile-menu-overlay .mobile-cta { background: #ff822e; color: #fff; padding: 14px 32px; border-radius: 6px; font-size: 18px; font-weight: 600; }
 }
-/* Hamburger button - hidden on desktop */
+/* Hamburger button + overlay - hidden on desktop by default */
 .mobile-hamburger { display: none; position: fixed; top: 16px; right: 16px; z-index: 9999; background: none; border: none; cursor: pointer; padding: 8px; }
 .mobile-hamburger span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; }
+.mobile-menu-overlay { display: none; }
 </style>
 </head> <body class="t-body" style="margin:0;">
 <button class="mobile-hamburger" onclick="document.querySelector('.mobile-menu-overlay').classList.add('active')">
