@@ -71,28 +71,33 @@ var emailTmpl = template.Must(template.New("email").Parse(`<!DOCTYPE html PUBLIC
     <td align="center" style="padding:24px 12px;">
       <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:#FFFFFF;">
 
-        <!-- Header: dark band -->
+        <!-- Header: minimal cream — black border-top, centered mark + serif wordmark + gold rule tagline -->
         <tr>
-          <td bgcolor="#0D1313" style="background:#0D1313;padding:0;">
+          <td bgcolor="#FFFFFF" style="background:#FFFFFF;padding:0;border-top:3px solid #0D1313;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
-                <td class="px" style="padding:30px 40px 26px 40px;">
-                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <td class="px" align="center" style="padding:38px 40px 14px 40px;">
+                  <img src="https://magnethome.es/img/email-mark-black.png" width="48" height="48" alt="MagnetHome" style="display:block;margin:0 auto;width:48px;height:48px;"/>
+                </td>
+              </tr>
+              <tr>
+                <td class="px" align="center" style="padding:8px 40px 12px 40px;font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:400;color:#0D1313;letter-spacing:5px;text-transform:uppercase;">
+                  M<span style="font-size:22px;letter-spacing:3.5px;">AGNET</span>H<span style="font-size:22px;letter-spacing:3.5px;">OME</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="px" align="center" style="padding:0 40px 32px 40px;">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
                     <tr>
-                      <td valign="middle" width="44" style="padding-right:14px;">
-                        <img src="https://magnethome.es/img/email-mark.png" width="36" height="36" alt="MagnetHome" style="display:block;width:36px;height:36px;"/>
-                      </td>
-                      <td valign="middle" style="font-family:Georgia,'Times New Roman',serif;color:#CCAA63;font-size:22px;font-weight:400;letter-spacing:3px;text-transform:uppercase;">
-                        M<span style="font-size:18px;letter-spacing:2px;">AGNET</span>H<span style="font-size:18px;letter-spacing:2px;">OME</span>
-                      </td>
-                      <td class="tagline" valign="middle" align="right" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#E5C988;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:500;">
-                        Reformas Integrales · Costa del Sol
+                      <td style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#A8884B;letter-spacing:3px;text-transform:uppercase;font-weight:600;">
+                        <span style="display:inline-block;width:24px;height:1px;background:#CCAA63;vertical-align:middle;margin-right:10px;font-size:0;line-height:0;">&nbsp;</span>
+                        Reformas · Costa del Sol
+                        <span style="display:inline-block;width:24px;height:1px;background:#CCAA63;vertical-align:middle;margin-left:10px;font-size:0;line-height:0;">&nbsp;</span>
                       </td>
                     </tr>
                   </table>
                 </td>
               </tr>
-              <tr><td style="height:1px;background:#CCAA63;line-height:1px;font-size:0;">&nbsp;</td></tr>
             </table>
           </td>
         </tr>
@@ -134,7 +139,7 @@ var emailTmpl = template.Must(template.New("email").Parse(`<!DOCTYPE html PUBLIC
 
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="footer-cols">
                     <tr>
-                      <td valign="top" width="50%" style="padding:0 12px 0 0;">
+                      <td valign="top" width="36%" style="padding:0 12px 0 0;">
                         <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#CCAA63;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:12px;">
                           Contacto
                         </div>
@@ -144,13 +149,19 @@ var emailTmpl = template.Must(template.New("email").Parse(`<!DOCTYPE html PUBLIC
                           <a href="mailto:info@magnethome.es" style="color:#FFFFFF;text-decoration:none;">info@magnethome.es</a>
                         </div>
                       </td>
-                      <td valign="top" width="50%" style="padding:0 0 0 12px;">
+                      <td valign="top" width="40%" style="padding:0 12px;">
                         <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#CCAA63;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:12px;">
                           Zonas de servicio
                         </div>
                         <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:13px;color:#FFFFFF;line-height:1.8;">
                           Málaga · Marbella · Fuengirola<br/>Benalmádena · Mijas · Ronda
                         </div>
+                      </td>
+                      <td valign="top" width="24%" style="padding:0 0 0 12px;">
+                        <div style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:10px;color:#CCAA63;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:12px;">
+                          Síguenos
+                        </div>
+                        <a href="https://www.instagram.com/magnethome_/" style="display:inline-block;width:34px;height:34px;border:1px solid #CCAA63;border-radius:50%;text-align:center;line-height:32px;color:#CCAA63;text-decoration:none;font-family:Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0;">Ig</a>
                       </td>
                     </tr>
                   </table>
