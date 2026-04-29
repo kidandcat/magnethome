@@ -12,7 +12,7 @@ RUN apk add --no-cache ca-certificates tzdata && adduser -D -u 1000 app
 WORKDIR /app
 COPY --from=build /out/mh-server /app/mh-server
 # Landing site assets — everything except the server source and infra files.
-COPY index.html ./
+COPY index.html aviso-legal.html privacidad.html ./
 COPY css ./css
 COPY js ./js
 COPY img ./img

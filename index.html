@@ -205,14 +205,15 @@ gtag('config', 'AW-17877696537');
   footer { background: var(--black); color: var(--paper); }
   footer .topline { height: 1px; background: var(--gold); }
   footer .inner { padding: 70px 64px 36px; }
-  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 56px; align-items: start; }
-  .footer-brand p { font-size: 14px; color: #9FA5A5; line-height: 1.65; margin: 18px 0 0; max-width: 320px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; align-items: start; }
+  .footer-brand p { font-size: 14px; color: #9FA5A5; line-height: 1.65; margin: 18px 0 0; max-width: 520px; }
   .footer-col .title { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 14px; }
   .footer-col a { display: block; color: var(--paper); text-decoration: none; font-size: 13.5px; line-height: 1.85; }
   .footer-col a:hover { color: var(--gold); }
   .footer-col .zones { color: #C8CDCD; font-size: 13.5px; line-height: 1.85; }
-  .socials { display: flex; gap: 8px; }
-  .socials a { width: 32px; height: 32px; border: 1px solid var(--gold); color: var(--gold); display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 11px; font-weight: 700; }
+  .socials { display: flex; gap: 10px; }
+  .socials a { width: 40px; height: 40px; border: 1px solid var(--gold); color: var(--gold); display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; transition: background .15s, color .15s; }
+  .socials a svg { width: 18px; height: 18px; display: block; }
   .socials a:hover { background: var(--gold); color: var(--black); }
   .footer-bottom { border-top: 1px solid rgba(204,170,99,0.18); margin-top: 56px; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 11px; }
   .footer-bottom .legal { color: #7A7F7F; letter-spacing: 0.5px; }
@@ -496,18 +497,21 @@ gtag('config', 'AW-17877696537');
       <div class="footer-col">
         <div class="title">Síguenos</div>
         <div class="socials">
-          <a href="#" aria-label="Instagram">Ig</a>
-          <a href="#" aria-label="Facebook">Fb</a>
-          <a href="#" aria-label="LinkedIn">Li</a>
-          <a href="#" aria-label="Pinterest">In</a>
+          <a href="https://www.instagram.com/magnethome_/" target="_blank" rel="noopener" aria-label="Instagram MagnetHome">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="legal">© 2026 MagnetHome. Todos los derechos reservados. · Costa del Sol, Málaga · España</div>
       <div class="links">
-        <a href="#">Aviso legal</a>
-        <a href="#">Política de privacidad</a>
+        <a href="/aviso-legal.html">Aviso legal</a>
+        <a href="/privacidad.html">Política de privacidad</a>
         <a href="https://magnethome.es" class="url">magnethome.es</a>
       </div>
     </div>
