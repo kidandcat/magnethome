@@ -22,28 +22,56 @@ var funcs = template.FuncMap{
 	},
 }
 
-func loadTemplates() (*template.Template, error) {
-	root := template.New("").Funcs(funcs)
+// Pages render layout.html + their own file as a separate tree, so each can
+// define its own {{define "content"}} block without colliding with the others.
+var pageFiles = map[string]string{
+	"inbox":   "inbox.html",
+	"sent":    "sent.html",
+	"detail":  "detail.html",
+	"compose": "compose.html",
+}
+
+type tmplRenderer struct {
+	pages map[string]*template.Template
+	login *template.Template // standalone, no shared layout
+}
+
+func newRenderer() (*tmplRenderer, error) {
 	sub, err := fs.Sub(templatesFS, "templates")
 	if err != nil {
 		return nil, err
 	}
-	return root.ParseFS(sub, "*.html")
-}
-
-type tmplRenderer struct{ t *template.Template }
-
-func newRenderer() (*tmplRenderer, error) {
-	t, err := loadTemplates()
+	r := &tmplRenderer{pages: map[string]*template.Template{}}
+	for name, file := range pageFiles {
+		t, err := template.New("layout.html").Funcs(funcs).ParseFS(sub, "layout.html", file)
+		if err != nil {
+			return nil, fmt.Errorf("parsing %s: %w", file, err)
+		}
+		r.pages[name] = t
+	}
+	login, err := template.New("login.html").Funcs(funcs).ParseFS(sub, "login.html")
 	if err != nil {
 		return nil, err
 	}
-	return &tmplRenderer{t: t}, nil
+	r.login = login
+	return r, nil
 }
 
 func (r *tmplRenderer) render(w http.ResponseWriter, name string, data any) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	if err := r.t.ExecuteTemplate(w, name, data); err != nil {
+	var t *template.Template
+	var entry string
+	if name == "login" {
+		t, entry = r.login, "login"
+	} else {
+		t = r.pages[name]
+		entry = "layout"
+	}
+	if t == nil {
+		http.Error(w, "unknown template "+name, http.StatusInternalServerError)
+		return
+	}
+	if err := t.ExecuteTemplate(w, entry, data); err != nil {
 		http.Error(w, fmt.Sprintf("template %s: %v", name, err), http.StatusInternalServerError)
 	}
 }
