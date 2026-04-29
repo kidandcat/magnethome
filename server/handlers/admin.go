@@ -83,6 +83,15 @@ func (s *Server) ToggleArchive(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
+func (s *Server) Preview(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		badRequest(w, "bad form")
+		return
+	}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_, _ = w.Write([]byte(email.RenderHTML(r.PostFormValue("body"))))
+}
+
 func (s *Server) ComposeForm(w http.ResponseWriter, r *http.Request) {
 	s.renderer.render(w, "compose", s.baseData("compose", map[string]any{
 		"To": "", "Subject": "", "Body": "", "From": s.cfg.DefaultFrom, "Error": "",

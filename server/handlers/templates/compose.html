@@ -2,15 +2,31 @@
 {{define "content"}}
 <div class="page-head"><h1>Nuevo email</h1></div>
 {{if .Error}}<p class="error">{{.Error}}</p>{{end}}
-<form method="post" action="/admin/compose" class="compose">
-  <label>De
-    <select name="from">
-      {{range .FromOptions}}<option value="{{.}}" {{if eq . $.From}}selected{{end}}>{{.}}</option>{{end}}
-    </select>
-  </label>
-  <label>Para<input type="text" name="to" value="{{.To}}" required></label>
-  <label>Asunto<input type="text" name="subject" value="{{.Subject}}"></label>
-  <label>Mensaje<textarea name="body" rows="14" required>{{.Body}}</textarea></label>
-  <button type="submit">Enviar</button>
-</form>
+<nav class="split-tabs" role="tablist">
+  <button type="button" class="active" data-pane="form">Editor</button>
+  <button type="button" data-pane="preview">Vista previa</button>
+</nav>
+<div class="split">
+  <div class="pane pane-form active">
+    <form method="post" action="/admin/compose" class="compose">
+      <label>De
+        <select name="from">
+          {{range .FromOptions}}<option value="{{.}}" {{if eq . $.From}}selected{{end}}>{{.}}</option>{{end}}
+        </select>
+      </label>
+      <label>Para<input type="text" name="to" value="{{.To}}" required></label>
+      <label>Asunto<input type="text" name="subject" value="{{.Subject}}"></label>
+      <label>Mensaje<textarea id="body-input" name="body" rows="18" required>{{.Body}}</textarea></label>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  <div class="pane pane-preview">
+    <div class="preview-head">
+      <span>Vista previa</span>
+      <span id="preview-status"></span>
+    </div>
+    <iframe id="preview-frame" title="Vista previa del email"></iframe>
+  </div>
+</div>
+<script src="/admin/static/preview.js" defer></script>
 {{end}}

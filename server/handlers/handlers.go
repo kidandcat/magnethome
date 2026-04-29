@@ -58,6 +58,7 @@ func (s *Server) Routes(mux *http.ServeMux, landingDir string) {
 	mux.Handle("GET /admin/email/{id}", protect(s.EmailDetail))
 	mux.Handle("POST /admin/email/{id}/reply", protect(s.Reply))
 	mux.Handle("POST /admin/email/{id}/archive", protect(s.ToggleArchive))
+	mux.Handle("POST /admin/preview", protect(s.Preview))
 
 	// Webhook (no auth, signature-verified)
 	mux.HandleFunc("POST /webhooks/resend", s.ResendWebhook)

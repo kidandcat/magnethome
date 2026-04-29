@@ -30,17 +30,33 @@
 <section class="reply">
   <h2>Responder</h2>
   {{if .ReplyError}}<p class="error">{{.ReplyError}}</p>{{end}}
-  <form method="post" action="/admin/email/{{.Email.ID}}/reply">
-    <label>De
-      <select name="from">
-        {{range .FromOptions}}<option value="{{.}}">{{.}}</option>{{end}}
-      </select>
-    </label>
-    <label>Para<input type="text" name="to" value="{{.Email.From}}" required></label>
-    <label>Asunto<input type="text" name="subject" value="{{.ReplySubject}}"></label>
-    <label>Mensaje<textarea name="body" rows="10" required></textarea></label>
-    <button type="submit">Enviar respuesta</button>
-  </form>
+  <nav class="split-tabs" role="tablist">
+    <button type="button" class="active" data-pane="form">Editor</button>
+    <button type="button" data-pane="preview">Vista previa</button>
+  </nav>
+  <div class="split">
+    <div class="pane pane-form active">
+      <form method="post" action="/admin/email/{{.Email.ID}}/reply">
+        <label>De
+          <select name="from">
+            {{range .FromOptions}}<option value="{{.}}">{{.}}</option>{{end}}
+          </select>
+        </label>
+        <label>Para<input type="text" name="to" value="{{.Email.From}}" required></label>
+        <label>Asunto<input type="text" name="subject" value="{{.ReplySubject}}"></label>
+        <label>Mensaje<textarea id="body-input" name="body" rows="14" required></textarea></label>
+        <button type="submit">Enviar respuesta</button>
+      </form>
+    </div>
+    <div class="pane pane-preview">
+      <div class="preview-head">
+        <span>Vista previa</span>
+        <span id="preview-status"></span>
+      </div>
+      <iframe id="preview-frame" title="Vista previa del email"></iframe>
+    </div>
+  </div>
+  <script src="/admin/static/preview.js" defer></script>
 </section>
 {{end}}
 {{end}}
