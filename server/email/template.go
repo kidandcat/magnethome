@@ -77,7 +77,7 @@ var emailTmpl = template.Must(template.New("email").Parse(`<!DOCTYPE html PUBLIC
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td class="px" align="center" style="padding:38px 40px 14px 40px;">
-                  <img src="https://magnethome.es/img/email-mark-black.png" width="48" height="48" alt="MagnetHome" style="display:block;margin:0 auto;width:48px;height:48px;"/>
+                  <img src="https://magnethome.es/img/email-mark-black.png" width="96" height="96" alt="MagnetHome" style="display:block;margin:0 auto;width:96px;height:96px;"/>
                 </td>
               </tr>
               <tr>
