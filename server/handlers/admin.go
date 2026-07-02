@@ -186,4 +186,3 @@ func (s *Server) send(from string, to []string, subject, body, inReplyTo string)
 	_, err = s.cfg.Repo.Insert(rec)
 	return err
 }
-

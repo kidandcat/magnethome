@@ -23,7 +23,15 @@ import (
 func main() {
 	cfg := loadConfig()
 
-	store, err := db.Open(cfg.DataDir, cfg.RaftBind)
+	store, err := db.Open(cfg.DataDir, db.Backup{
+		Endpoint:   os.Getenv("AWS_ENDPOINT_URL_S3"),
+		Region:     envOr("AWS_REGION", "gra"),
+		Bucket:     os.Getenv("MAGNETHOME_BACKUP_BUCKET"),
+		AccessKey:  os.Getenv("AWS_ACCESS_KEY_ID"),
+		SecretKey:  os.Getenv("AWS_SECRET_ACCESS_KEY"),
+		AlertEmail: os.Getenv("MAGNETHOME_ALERT_EMAIL"),
+		ResendKey:  os.Getenv("RESEND_API_KEY"),
+	})
 	if err != nil {
 		log.Fatalf("db open: %v", err)
 	}

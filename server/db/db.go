@@ -1,32 +1,67 @@
 package db
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
 	"time"
 
-	"github.com/kidandcat/colmena"
+	"github.com/mentasystems/colmena"
+	"github.com/mentasystems/colmena/backup/s3"
 )
+
+// Backup enables continuous backup when Bucket and the credentials are set.
+type Backup struct {
+	Endpoint   string
+	Region     string
+	Bucket     string
+	AccessKey  string
+	SecretKey  string
+	AlertEmail string
+	ResendKey  string
+}
+
+func (b Backup) enabled() bool {
+	return b.Bucket != "" && b.AccessKey != "" && b.SecretKey != ""
+}
+
+func (b Backup) backend(db string) (colmena.BackupBackend, error) {
+	return s3.NewBackend(s3.Config{
+		Endpoint:  b.Endpoint,
+		Region:    b.Region,
+		Bucket:    b.Bucket,
+		Prefix:    "magnethome/" + db,
+		AccessKey: b.AccessKey,
+		SecretKey: b.SecretKey,
+	})
+}
 
 type Store struct {
 	Node *colmena.Node
 	DB   *sql.DB
 }
 
-func Open(dataDir, bind string) (*Store, error) {
-	cfg := colmena.Config{
-		NodeID:    "magnethome-1",
-		DataDir:   dataDir,
-		Bind:      bind,
-		Bootstrap: true,
+// Open boots the colmena store (single node) and applies the schema. With
+// backups enabled it restores from the newest backup when the database does
+// not exist yet, and alerts by email when the backup engine fails.
+func Open(dataDir string, backup Backup) (*Store, error) {
+	cfg := colmena.Config{DataDir: dataDir}
+	if backup.enabled() {
+		if err := restoreIfMissing(dataDir, backup); err != nil {
+			return nil, err
+		}
+		cfg.Backup = &colmena.BackupConfig{
+			NewBackend: backup.backend,
+			OnError: colmena.NewResendAlerter(backup.ResendKey,
+				"Magnethome <alerts@mentasystems.com>", backup.AlertEmail, "magnethome"),
+		}
 	}
 	node, err := colmena.New(cfg)
 	if err != nil {
 		return nil, fmt.Errorf("colmena.New: %w", err)
-	}
-	if err := node.WaitForLeader(15 * time.Second); err != nil {
-		node.Close()
-		return nil, fmt.Errorf("waiting for leader: %w", err)
 	}
 	s := &Store{Node: node, DB: node.DB()}
 	if err := s.migrate(); err != nil {
@@ -35,6 +70,35 @@ func Open(dataDir, bind string) (*Store, error) {
 	}
 	return s, nil
 }
+
+// restoreIfMissing rebuilds default.db from the newest backup when the data
+// dir has no database yet — the disaster-recovery boot path.
+func restoreIfMissing(dataDir string, backup Backup) error {
+	if _, statErr := os.Stat(filepath.Join(dataDir, "default.db")); statErr == nil {
+		return nil
+	}
+	backend, err := backup.backend("default")
+	if err != nil {
+		return fmt.Errorf("backup backend: %w", err)
+	}
+	defer backend.Close()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+	gens, err := backend.Generations(ctx)
+	if err != nil || len(gens) == 0 {
+		log.Printf("db: no backups to restore (fresh install): %v", err)
+		return nil
+	}
+	log.Printf("db: default.db missing — restoring from backup generation %s", gens[0].ID)
+	if err := colmena.Restore(ctx, backend, dataDir); err != nil {
+		return fmt.Errorf("restore from backup: %w", err)
+	}
+	log.Printf("db: restore complete")
+	return nil
+}
+
+// BackupStatus exposes the backup engine state (health endpoint).
+func (s *Store) BackupStatus() map[string]colmena.BackupStatus { return s.Node.BackupStatus() }
 
 func (s *Store) Close() error {
 	return s.Node.Close()

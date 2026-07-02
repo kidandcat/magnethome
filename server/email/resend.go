@@ -24,12 +24,12 @@ func New(apiKey string) *Client {
 }
 
 type SendRequest struct {
-	From    string   `json:"from"`
-	To      []string `json:"to"`
-	Subject string   `json:"subject"`
-	HTML    string   `json:"html,omitempty"`
-	Text    string   `json:"text,omitempty"`
-	ReplyTo string   `json:"reply_to,omitempty"`
+	From    string            `json:"from"`
+	To      []string          `json:"to"`
+	Subject string            `json:"subject"`
+	HTML    string            `json:"html,omitempty"`
+	Text    string            `json:"text,omitempty"`
+	ReplyTo string            `json:"reply_to,omitempty"`
 	Headers map[string]string `json:"headers,omitempty"`
 }
 
