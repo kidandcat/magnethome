@@ -71,13 +71,16 @@ func VerifySvixSignature(secret, msgID, msgTimestamp, signatureHeader string, bo
 	if secret == "" {
 		return errors.New("missing webhook secret")
 	}
-	// Resend gives the secret prefixed with "whsec_"; strip it before HMAC.
-	rawSecret := secret
-	if strings.HasPrefix(rawSecret, "whsec_") {
-		rawSecret = strings.TrimPrefix(rawSecret, "whsec_")
+	// Resend gives the secret prefixed with "whsec_"; per the Svix spec the
+	// remainder is base64 and the DECODED bytes are the HMAC key.
+	rawSecret := strings.TrimPrefix(secret, "whsec_")
+	key, err := base64Decode(rawSecret)
+	if err != nil {
+		// Fall back to the literal string for non-standard secrets.
+		key = []byte(rawSecret)
 	}
 	signed := fmt.Sprintf("%s.%s.%s", msgID, msgTimestamp, string(body))
-	mac := hmac.New(sha256.New, []byte(rawSecret))
+	mac := hmac.New(sha256.New, key)
 	mac.Write([]byte(signed))
 	expected := mac.Sum(nil)
 
