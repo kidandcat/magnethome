@@ -13,6 +13,8 @@ WORKDIR /app
 COPY --from=build /out/mh-server /app/mh-server
 # Landing site assets — everything except the server source and infra files.
 COPY *.html ./
+COPY es ./es
+COPY en ./en
 COPY css ./css
 COPY js ./js
 COPY img ./img
