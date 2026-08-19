@@ -214,5 +214,5 @@ func (s *Server) EmailHTML(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.Header().Set("Content-Security-Policy", "default-src 'none'; img-src data: https: http:; style-src 'unsafe-inline'; font-src data: https:")
-	_, _ = w.Write([]byte(e.BodyHTML))
+	_, _ = w.Write([]byte(wrapEmailHTML(e.BodyHTML)))
 }
