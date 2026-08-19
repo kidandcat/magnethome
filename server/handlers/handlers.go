@@ -56,6 +56,7 @@ func (s *Server) Routes(mux *http.ServeMux, landingDir string) {
 	mux.Handle("GET /admin/compose", protect(s.ComposeForm))
 	mux.Handle("POST /admin/compose", protect(s.ComposeSubmit))
 	mux.Handle("GET /admin/email/{id}", protect(s.EmailDetail))
+	mux.Handle("GET /admin/email/{id}/html", protect(s.EmailHTML))
 	mux.Handle("POST /admin/email/{id}/reply", protect(s.Reply))
 	mux.Handle("POST /admin/email/{id}/archive", protect(s.ToggleArchive))
 	mux.Handle("POST /admin/preview", protect(s.Preview))

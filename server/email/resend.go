@@ -126,3 +126,40 @@ func base64Decode(s string) ([]byte, error) {
 	}
 	return nil, errors.New("not base64")
 }
+
+type ReceivedEmail struct {
+	ID      string `json:"id"`
+	HTML    string `json:"html"`
+	Text    string `json:"text"`
+	Subject string `json:"subject"`
+	From    string `json:"from"`
+}
+
+// GetReceiving loads html/text for an inbound email. Resend webhooks are
+// metadata-only; the body lives on GET /emails/receiving/{id}.
+func (c *Client) GetReceiving(id string) (*ReceivedEmail, error) {
+	if c == nil || c.APIKey == "" || id == "" {
+		return nil, errors.New("missing resend client or email id")
+	}
+	httpReq, err := http.NewRequest("GET", "https://api.resend.com/emails/receiving/"+id, nil)
+	if err != nil {
+		return nil, err
+	}
+	httpReq.Header.Set("Authorization", "Bearer "+c.APIKey)
+	httpReq.Header.Set("Accept", "application/json")
+	httpReq.Header.Set("User-Agent", "magnethome-inbox/1.0")
+	resp, err := c.HTTP.Do(httpReq)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	respBody, _ := io.ReadAll(resp.Body)
+	if resp.StatusCode >= 300 {
+		return nil, fmt.Errorf("resend receiving get: %s: %s", resp.Status, string(respBody))
+	}
+	var out ReceivedEmail
+	if err := json.Unmarshal(respBody, &out); err != nil {
+		return nil, err
+	}
+	return &out, nil
+}

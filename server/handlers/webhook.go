@@ -36,14 +36,15 @@ func anyAddressMatchesDomain(addrs []string, domain string) bool {
 type resendWebhook struct {
 	Type string `json:"type"`
 	Data struct {
-		EmailID string   `json:"email_id"`
-		From    string   `json:"from"`
-		To      []string `json:"to"`
-		Subject string   `json:"subject"`
-		HTML    string   `json:"html"`
-		Text    string   `json:"text"`
-		// Inbound payloads expose the raw message under different fields depending on Resend's version;
-		// we accept the most common ones.
+		EmailID     string   `json:"email_id"`
+		From        string   `json:"from"`
+		To          []string `json:"to"`
+		ReceivedFor []string `json:"received_for"`
+		Subject     string   `json:"subject"`
+		HTML        string   `json:"html"`
+		Text        string   `json:"text"`
+		// Resend email.received is metadata-only (no html/text). We still
+		// accept those fields if a future payload includes them.
 	} `json:"data"`
 }
 
@@ -75,8 +76,10 @@ func (s *Server) ResendWebhook(w http.ResponseWriter, r *http.Request) {
 	switch p.Type {
 	case "email.received", "inbound.email":
 		// Resend webhooks are account-wide — ignore events for other domains in the account.
-		if !anyAddressMatchesDomain(p.Data.To, s.cfg.AcceptedDomain) {
-			log.Printf("resend webhook: ignoring %s for non-magnethome recipients %v", p.Type, p.Data.To)
+		recipients := append([]string{}, p.Data.To...)
+		recipients = append(recipients, p.Data.ReceivedFor...)
+		if !anyAddressMatchesDomain(recipients, s.cfg.AcceptedDomain) {
+			log.Printf("resend webhook: ignoring %s for non-magnethome recipients %v", p.Type, recipients)
 			break
 		}
 		rec := &models.Email{
@@ -87,6 +90,19 @@ func (s *Server) ResendWebhook(w http.ResponseWriter, r *http.Request) {
 			BodyHTML:  p.Data.HTML,
 			BodyText:  p.Data.Text,
 			ResendID:  p.Data.EmailID,
+		}
+		// Webhook payload has no body; fetch it from the Receiving API.
+		if rec.BodyHTML == "" && rec.BodyText == "" && rec.ResendID != "" && s.cfg.Resend != nil {
+			got, err := s.cfg.Resend.GetReceiving(rec.ResendID)
+			if err != nil {
+				log.Printf("resend webhook: fetch receiving %s: %v", rec.ResendID, err)
+			} else if got != nil {
+				rec.BodyHTML = got.HTML
+				rec.BodyText = got.Text
+				if rec.Subject == "" {
+					rec.Subject = got.Subject
+				}
+			}
 		}
 		if _, err := s.cfg.Repo.Insert(rec); err != nil {
 			serverError(w, err)

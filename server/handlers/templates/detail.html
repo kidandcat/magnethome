@@ -20,9 +20,11 @@
 
 <div class="body">
   {{if .Email.BodyHTML}}
-    <iframe sandbox srcdoc="{{.Email.BodyHTML}}"></iframe>
-  {{else}}
+    <iframe class="mail-body" sandbox src="/admin/email/{{.Email.ID}}/html" title="Cuerpo del email"></iframe>
+  {{else if .Email.BodyText}}
     <pre>{{.Email.BodyText}}</pre>
+  {{else}}
+    <p class="empty">Este email no tiene cuerpo. Recarga la página o ábrelo de nuevo.</p>
   {{end}}
 </div>
 

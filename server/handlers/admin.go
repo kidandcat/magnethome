@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"strings"
 
@@ -50,6 +51,18 @@ func (s *Server) EmailDetail(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.NotFound(w, r)
 		return
+	}
+	if e.Direction == "incoming" && e.ResendID != "" && e.BodyHTML == "" && e.BodyText == "" && s.cfg.Resend != nil {
+		if got, ferr := s.cfg.Resend.GetReceiving(e.ResendID); ferr != nil {
+			log.Printf("email detail: fetch receiving %s: %v", e.ResendID, ferr)
+		} else if got != nil && (got.HTML != "" || got.Text != "") {
+			if uerr := s.cfg.Repo.UpdateBody(e.ID, got.HTML, got.Text); uerr != nil {
+				log.Printf("email detail: update body %d: %v", e.ID, uerr)
+			} else {
+				e.BodyHTML = got.HTML
+				e.BodyText = got.Text
+			}
+		}
 	}
 	if e.Direction == "incoming" && !e.IsRead {
 		_ = s.cfg.Repo.MarkRead(id)
@@ -185,4 +198,21 @@ func (s *Server) send(from string, to []string, subject, body, inReplyTo string)
 	}
 	_, err = s.cfg.Repo.Insert(rec)
 	return err
+}
+
+func (s *Server) EmailHTML(w http.ResponseWriter, r *http.Request) {
+	id, err := parseID(r)
+	if err != nil {
+		badRequest(w, "bad id")
+		return
+	}
+	e, err := s.cfg.Repo.Get(id)
+	if err != nil || e.BodyHTML == "" {
+		http.NotFound(w, r)
+		return
+	}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("Content-Security-Policy", "default-src 'none'; img-src data: https: http:; style-src 'unsafe-inline'; font-src data: https:")
+	_, _ = w.Write([]byte(e.BodyHTML))
 }

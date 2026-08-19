@@ -49,6 +49,11 @@ func (r *EmailRepo) ListOutgoing(limit int) ([]Email, error) {
 		 FROM emails WHERE direction = 'outgoing' ORDER BY created_at DESC LIMIT ?`, limit)
 }
 
+func (r *EmailRepo) UpdateBody(id int64, html, text string) error {
+	_, err := r.DB.Exec(`UPDATE emails SET body_html = ?, body_text = ? WHERE id = ?`, html, text, id)
+	return err
+}
+
 func (r *EmailRepo) MarkRead(id int64) error {
 	_, err := r.DB.Exec(`UPDATE emails SET is_read = 1 WHERE id = ?`, id)
 	return err
