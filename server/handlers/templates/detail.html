@@ -29,36 +29,50 @@
 </div>
 
 {{if eq .Email.Direction "incoming"}}
-<section class="reply">
-  <h2>Responder</h2>
-  {{if .ReplyError}}<p class="error">{{.ReplyError}}</p>{{end}}
-  <nav class="split-tabs" role="tablist">
-    <button type="button" class="active" data-pane="form">Editor</button>
-    <button type="button" data-pane="preview">Vista previa</button>
-  </nav>
-  <div class="split">
-    <div class="pane pane-form active">
-      <form method="post" action="/admin/email/{{.Email.ID}}/reply">
-        <label>De
-          <select name="from">
-            {{range .FromOptions}}<option value="{{.}}">{{.}}</option>{{end}}
-          </select>
-        </label>
-        <label>Para<input type="text" name="to" value="{{.Email.From}}" required></label>
-        <label>Asunto<input type="text" name="subject" value="{{.ReplySubject}}"></label>
-        <label>Mensaje<textarea id="body-input" name="body" rows="14" required></textarea></label>
-        <button type="submit">Enviar respuesta</button>
-      </form>
-    </div>
-    <div class="pane pane-preview">
-      <div class="preview-head">
-        <span>Vista previa</span>
-        <span id="preview-status"></span>
+<p class="reply-launch">
+  <button type="button" class="btn-reply" id="open-reply" aria-haspopup="dialog" aria-controls="reply-dialog">Responder</button>
+</p>
+
+<dialog class="reply-dialog" id="reply-dialog" {{if .ReplyError}}data-open="1"{{end}}>
+  <div class="reply-sheet">
+    <header class="reply-sheet-head">
+      <h2>Responder</h2>
+      <button type="button" class="reply-close" id="close-reply">Cerrar</button>
+    </header>
+    <div class="reply-sheet-body">
+      {{if .ReplyError}}<p class="error">{{.ReplyError}}</p>{{end}}
+      <nav class="split-tabs" role="tablist">
+        <button type="button" class="active" data-pane="form">Editor</button>
+        <button type="button" data-pane="preview">Vista previa</button>
+      </nav>
+      <div class="split">
+        <div class="pane pane-form active">
+          <form method="post" action="/admin/email/{{.Email.ID}}/reply">
+            <label>De
+              <select name="from">
+                {{range .FromOptions}}<option value="{{.}}">{{.}}</option>{{end}}
+              </select>
+            </label>
+            <label>Para<input type="text" name="to" value="{{.Email.From}}" required></label>
+            <label>Asunto<input type="text" name="subject" value="{{.ReplySubject}}"></label>
+            <label>Mensaje<textarea id="body-input" name="body" rows="14" required></textarea></label>
+            <div class="reply-form-actions">
+              <button type="button" class="reply-close" id="cancel-reply">Cerrar</button>
+              <button type="submit">Enviar respuesta</button>
+            </div>
+          </form>
+        </div>
+        <div class="pane pane-preview">
+          <div class="preview-head">
+            <span>Vista previa</span>
+            <span id="preview-status"></span>
+          </div>
+          <iframe id="preview-frame" title="Vista previa del email"></iframe>
+        </div>
       </div>
-      <iframe id="preview-frame" title="Vista previa del email"></iframe>
     </div>
   </div>
-  <script src="/admin/static/preview.js" defer></script>
-</section>
+</dialog>
+<script src="/admin/static/preview.js" defer></script>
 {{end}}
 {{end}}

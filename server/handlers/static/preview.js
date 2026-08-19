@@ -1,4 +1,38 @@
 (function () {
+  const dialog = document.getElementById("reply-dialog");
+  const openBtn = document.getElementById("open-reply");
+  if (!dialog || !openBtn) return;
+
+  function openReply() {
+    if (typeof dialog.showModal === "function") {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+    }
+    const input = document.getElementById("body-input");
+    if (input) input.focus();
+  }
+
+  function closeReply() {
+    if (typeof dialog.close === "function" && dialog.open) dialog.close();
+    else dialog.removeAttribute("open");
+  }
+
+  openBtn.addEventListener("click", openReply);
+  dialog.querySelectorAll(".reply-close").forEach((btn) => {
+    btn.addEventListener("click", closeReply);
+  });
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) closeReply();
+  });
+  dialog.addEventListener("cancel", (e) => {
+    e.preventDefault();
+    closeReply();
+  });
+  if (dialog.dataset.open === "1") openReply();
+})();
+
+(function () {
   const input = document.getElementById("body-input");
   const frame = document.getElementById("preview-frame");
   const status = document.getElementById("preview-status");
